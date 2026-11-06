@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="km" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEREY TOPUP - វេបសាយទិញកាត និងបំពេញគ្រាប់ហ្គេមទំនើប និងសុវត្ថិភាព</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Battambang & Inter for Khmer & English support) -->
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Battambang', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Battambang', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-blue-700 to-blue-500 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
+        <i class="fa-solid fa-bullhorn mr-2 animate-bounce"></i> ស្វាគមន៍មកកាន់ SEREY TOPUP! សេវាកម្មបំពេញគ្រាប់ហ្គេមលឿន សុវត្ថិភាព និងទំនុកចិត្ត ២៤ម៉ោង/៧ថ្ងៃ 🚀
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" onclick="showMainSite()" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-gamepad text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-black tracking-wider bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">SEREY</span>
+                    <span class="text-xl sm:text-2xl font-bold text-slate-800">TOPUP</span>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex items-center flex-1 max-w-md mx-8" id="searchBarContainer">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" onkeyup="filterGames()" placeholder="ស្វែងរកហ្គេម ឬកាត..." class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl text-sm transition-all outline-none">
+                </div>
+            </div>
+
+            <!-- Right Actions / User Status -->
+            <div class="flex items-center gap-3">
+                <button onclick="openHistoryModal()" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-semibold transition-colors">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    ប្រវត្តិទិញ
+                </button>
+                <button onclick="openLoginModal()" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold shadow-md shadow-blue-600/20 active:scale-95 transition-all">
+                    <i class="fa-solid fa-user-circle"></i>
+                    ចូលគណនី
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN FRONTEND VIEW ================= -->
+    <div id="mainSiteView" class="flex-1 flex flex-col">
+        <!-- Main Content Container -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+            <!-- Hero Banner Slider / Carousel Area -->
+            <section class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white shadow-xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="relative z-10 max-w-xl space-y-4 text-center md:text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/30 text-blue-200 text-xs font-semibold backdrop-blur-sm border border-blue-400/20">
+                        <i class="fa-solid fa-bolt text-yellow-400"></i> លឿនបំផុត ទូទាត់ស្វ័យប្រវត្តិ ២៤/៧
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                        បំពេញគ្រាប់ហ្គេម <br><span class="bg-gradient-to-r from-blue-300 via-cyan-200 to-white bg-clip-text text-transparent">តម្លៃសមរម្យ និងទំនុកចិត្តខ្ពស់</span>
+                    </h1>
+                    <p class="text-blue-100/90 text-sm sm:text-base leading-relaxed">
+                        គាំទ្រគ្រប់ហ្គេមល្បីៗដូចជា Mobile Legends, PUBG Mobile, Free Fire, Roblox និងកាតផ្សេងៗទៀតជាមួយការទូទាត់ប្រាក់តាម ABA Pay, Acleda និង Wing ងាយៗ។
+                    </p>
+                    <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="#games-section" class="px-6 py-3 rounded-xl bg-white text-blue-900 font-bold text-sm shadow-lg hover:bg-blue-50 transition-all">
+                            <i class="fa-solid fa-fire mr-2 text-blue-600"></i> ជ្រើសរើសហ្គេម
+                        </a>
+                        <a href="#support-section" class="px-6 py-3 rounded-xl bg-blue-800/60 hover:bg-blue-800 border border-blue-700 text-white font-medium text-sm transition-all">
+                            <i class="fa-solid fa-headset mr-2 text-cyan-300"></i> ជំនួយអតិថិជន
+                        </a>
+                    </div>
+                </div>
+                <div class="relative z-10 mt-8 md:mt-0 flex justify-center">
+                    <div class="w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 p-2 shadow-2xl animate-pulse">
+                        <div class="w-full h-full rounded-full bg-blue-950 flex items-center justify-center overflow-hidden border-4 border-white/20">
+                            <i class="fa-solid fa-shield-halved text-7xl sm:text-9xl text-blue-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Filter Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryTabs">
+                <button onclick="filterCategory('all', this)" class="category-btn px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-sm shrink-0 shadow-md shadow-blue-500/20 transition-all">
+                    <i class="fa-solid fa-grip mr-1.5"></i> ទាំងអស់ (All)
+                </button>
+                <button onclick="filterCategory('game', this)" class="category-btn px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold text-sm shrink-0 border border-slate-200 transition-all">
+                    <i class="fa-solid fa-gamepad mr-1.5 text-blue-600"></i> ហ្គេមអនឡាញ
+                </button>
+                <button onclick="filterCategory('card', this)" class="category-btn px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold text-sm shrink-0 border border-slate-200 transition-all">
+                    <i class="fa-solid fa-credit-card mr-1.5 text-indigo-600"></i> កាតបង់ប្រាក់
+                </button>
+                <button onclick="filterCategory('hot', this)" class="category-btn px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold text-sm shrink-0 border border-slate-200 transition-all">
+                    <i class="fa-solid fa-fire mr-1.5 text-red-500"></i> លក់ដាច់បំផុត
+                </button>
+            </div>
+
+            <!-- Games Grid Section -->
+            <section id="games-section" class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">ហ្គេម និងកាតពេញនិយម</h2>
+                    </div>
+                    <span class="text-xs sm:text-sm text-slate-500 font-medium">ជ្រើសរើសហ្គេមដែលអ្នកចង់បំពេញ</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6" id="gamesGrid">
+                    <!-- Dynamic Game Cards will be injected by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Customer Support & Trust Badges -->
+            <section id="support-section" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 text-xl">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">បំពេញលឿនទាន់ចិត្ត</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm mt-1">ប្រព័ន្ធស្វ័យប្រវត្តិធ្វើការបញ្ជូនគ្រាប់ហ្គេមចូលគណនីរបស់អ្នកក្នុងរយៈពេល ១ ដល់ ៣នាទី។</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 text-xl">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">សុវត្ថិភាព ១០០%</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm mt-1">ធានាព័ត៌មានអតិថិជន និងគណនីហ្គេមមានសុវត្ថិភាពខ្ពស់ មិនមានហានិភ័យ។</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 text-xl">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">សេវាគាំទ្រ ២៤/៧</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm mt-1">មានក្រុមការងារត្រៀមខ្លួនជួយដោះស្រាយរាល់បញ្ហានានារៀងរាល់ម៉ោង។</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ================= ADMIN DASHBOARD VIEW ================= -->
+    <div id="adminView" class="flex-1 flex flex-col hidden bg-slate-100">
+        <!-- Admin Sub-header -->
+        <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">SEREY TOPUP - Admin Dashboard</h2>
+                    <p class="text-xs text-slate-500">គ្រប់គ្រងហ្គេម កញ្ចប់ និងមើលប្រវត្តិលក់</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="showMainSite()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold transition-all">
+                    <i class="fa-solid fa-globe mr-1.5"></i> ទៅកាន់វេបសាយដើម
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6 flex-1">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 block">ការបញ្ជាទិញសរុប (Orders)</span>
+                        <h3 id="adminTotalOrders" class="text-2xl font-black text-slate-800">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 block">ចំណូលសរុប (Total Revenue)</span>
+                        <h3 id="adminTotalRevenue" class="text-2xl font-black text-emerald-600">$0.00</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 block">ចំនួនហ្គេមសរុប (Total Games)</span>
+                        <h3 id="adminTotalGames" class="text-2xl font-black text-slate-800">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Tabs / Actions -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-blue-600"></i> បញ្ជីហ្គេមទាំងអស់ក្នុងប្រព័ន្ធ
+                    </h3>
+                    <button onclick="openAddGameModal()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> បន្ថែមហ្គេមថ្មី
+                    </button>
+                </div>
+
+                <!-- Admin Games Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-xs text-slate-400 uppercase">
+                                <th class="py-3 px-4">រូបតំណាង</th>
+                                <th class="py-3 px-4">ឈ្មោះហ្គេម</th>
+                                <th class="py-3 px-4">ប្រភេទ</th>
+                                <th class="py-3 px-4">ស្ថានភាព</th>
+                                <th class="py-3 px-4 text-right">សកម្មភាព</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminGamesTableBody">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 mt-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-4 md:col-span-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <span class="text-xl font-black text-white tracking-wider">SEREY TOPUP</span>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-md leading-relaxed">
+                        SEREY TOPUP គឺជាវេបសាយឈានមុខគេក្នុងការផ្តល់សេវាកម្មបំពេញគ្រាប់ហ្គេម និងទិញកាតឌីជីថលនៅកម្ពុជាដោយស្វ័យប្រវត្តិ សុវត្ថិភាព និងតម្លៃសមរម្យ។
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-blue-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-blue-400 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-pink-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">តំណភ្ជាប់រហ័ស</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" onclick="showMainSite()" class="hover:text-blue-400 transition-colors">ទំព័រដើម</a></li>
+                        <li><a href="#games-section" onclick="showMainSite()" class="hover:text-blue-400 transition-colors">បញ្ជីហ្គេមទាំងអស់</a></li>
+                        <li><a href="#" onclick="openHistoryModal()" class="hover:text-blue-400 transition-colors">ប្រវត្តិការបញ្ជាទិញ</a></li>
+                        <li><a href="https://sereytopup-admin" onclick="event.preventDefault(); showAdminDashboard();" class="text-blue-400 hover:underline font-semibold flex items-center gap-1.5"><i class="fa-solid fa-lock text-xs"></i> Admin Dashboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">វិធីសាស្ត្រទូទាត់</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300">ABA Pay</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300">Acleda</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300">Wing</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300">KHQR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 SEREY TOPUP. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+                <p class="mt-2 sm:mt-0">Design for Gamers with <i class="fa-solid fa-heart text-red-500"></i> in Cambodia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PURCHASE MODAL -->
+    <div id="purchaseModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative transform transition-all max-h-[90vh] overflow-y-auto space-y-6">
+            <!-- Close Button -->
+            <button onclick="closePurchaseModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="flex items-center gap-4 border-b border-slate-100 pb-5">
+                <img id="modalGameIcon" src="" alt="Game Icon" class="w-16 h-16 rounded-2xl object-cover shadow-md border border-slate-200">
+                <div>
+                    <h3 id="modalGameTitle" class="text-xl sm:text-2xl font-bold text-slate-800"></h3>
+                    <p class="text-xs sm:text-sm text-blue-600 font-medium" id="modalGameCategoryDesc"></p>
+                </div>
+            </div>
+
+            <!-- Step 1: Enter User ID & Check Name Feature -->
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-slate-700">
+                    <span class="bg-blue-600 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs mr-1">1</span>
+                    បញ្ចូលលេខសម្គាល់គណនីរបស់អ្នក (User ID / Server ID)
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="userIdInput" placeholder="ឧទាហរណ៍: 12345678" class="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-sm outline-none transition-all">
+                    <input type="text" id="zoneIdInput" placeholder="Server ID" class="w-28 px-4 py-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-sm outline-none transition-all">
+                </div>
+                <!-- Check Name Button & Result Display -->
+                <div class="flex items-center justify-between pt-1">
+                    <button onclick="checkGameUsername()" class="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> ឆែកឈ្មោះ (Check Name)
+                    </button>
+                    <div id="checkNameResult" class="text-xs font-semibold text-emerald-600 hidden flex items-center gap-1">
+                        <i class="fa-solid fa-user-check"></i> ឈ្មោះគណនី៖ <span id="verifiedUsername" class="underline">PRO GAMER KH</span>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400">សូមពិនិត្យ User ID និងចុចឆែកឈ្មោះឱ្យបានត្រឹមត្រូវមុនពេលទូទាត់ប្រាក់។</p>
+            </div>
+
+            <!-- Step 2: Select Package -->
+            <div class="space-y-3">
+                <label class="block text-sm font-semibold text-slate-700">
+                    <span class="bg-blue-600 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs mr-1">2</span>
+                    ជ្រើសរើសកញ្ចប់គ្រាប់ហ្គេម
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="modalPackagesGrid">
+                    <!-- Dynamic packages injected here -->
+                </div>
+            </div>
+
+            <!-- Step 3: Payment Method -->
+            <div class="space-y-3">
+                <label class="block text-sm font-semibold text-slate-700">
+                    <span class="bg-blue-600 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs mr-1">3</span>
+                    ជ្រើសរើសវិធីសាស្ត្រទូទាត់ប្រាក់
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-blue-500 bg-blue-50/50 cursor-pointer payment-option">
+                        <input type="radio" name="payment" value="ABA" checked class="text-blue-600 focus:ring-blue-500">
+                        <div>
+                            <span class="block text-xs font-bold text-slate-800">ABA Pay / KHQR</span>
+                            <span class="block text-[10px] text-slate-500">ស្វ័យប្រវត្តិ ១០០%</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer payment-option">
+                        <input type="radio" name="payment" value="ACLEDA" class="text-blue-600 focus:ring-blue-500">
+                        <div>
+                            <span class="block text-xs font-bold text-slate-800">Acleda Pay</span>
+                            <span class="block text-[10px] text-slate-500">រហ័ស និងសុវត្ថិភាព</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer payment-option">
+                        <input type="radio" name="payment" value="WING" class="text-blue-600 focus:ring-blue-500">
+                        <div>
+                            <span class="block text-xs font-bold text-slate-800">Wing Money</span>
+                            <span class="block text-[10px] text-slate-500">ទូទាត់ភ្លាមបានភ្លាម</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Total & Checkout Button -->
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-slate-500 block">តម្លៃសរុបត្រូវបង់៖</span>
+                    <span id="selectedPriceDisplay" class="text-2xl font-black text-blue-600">$0.00</span>
+                </div>
+                <button onclick="processCheckout()" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 active:scale-95 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping"></i> បញ្ជាក់ការទិញ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR CODE PAYMENT SIMULATION MODAL -->
+    <div id="qrModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl relative">
+            <h3 class="text-lg font-bold text-slate-800">ស្កេនដើម្បីទូទាត់ប្រាក់</h3>
+            <p class="text-xs text-slate-500">សូមប្រើប្រាស់កម្មវិធី ABA ឬធនាគារណាមួយដើម្បីស្កេន QR ខាងក្រោម</p>
+            <div class="bg-slate-100 p-4 rounded-2xl flex items-center justify-center border border-slate-200">
+                <img src="https://placehold.co/200x200/1e293b/ffffff?text=KHQR+SEREY+TOPUP" alt="KHQR Code" class="rounded-xl shadow-md w-48 h-48">
+            </div>
+            <div class="space-y-1">
+                <p id="qrTotalText" class="text-sm font-bold text-blue-600">ទឹកប្រាក់: $0.00</p>
+                <p class="text-xs text-amber-600 font-medium"><i class="fa-solid fa-circle-notch animate-spin mr-1"></i> កំពុងរង់ចាំការទូទាត់ប្រាក់...</p>
+            </div>
+            <button onclick="simulatePaymentSuccess()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all">
+                ក្លែងបន្លំទូទាត់រួចរាល់ (Test Success)
+            </button>
+            <button onclick="closeQrModal()" class="text-xs text-slate-400 hover:text-slate-600">បោះបង់</button>
+        </div>
+    </div>
+
+    <!-- SUCCESS RECEIPT MODAL -->
+    <div id="successModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl relative">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">ការបញ្ជាទិញជោគជ័យ!</h3>
+            <p class="text-xs text-slate-500">ប្រព័ន្ធបានបញ្ជូនគ្រាប់ហ្គេមទៅកាន់គណនីរបស់អ្នករួចរាល់ជាស្រេច។</p>
+            <div class="bg-slate-50 p-4 rounded-2xl text-left space-y-2 text-xs text-slate-600 border border-slate-200">
+                <div class="flex justify-between"><span class="text-slate-400">លេខកូដវិក្កយបត្រ៖</span> <span id="receiptId" class="font-bold">#SR98234</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">ហ្គេម៖</span> <span id="receiptGame" class="font-bold">Mobile Legends</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">កញ្ចប់៖</span> <span id="receiptPackage" class="font-bold">110 Diamonds</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">តម្លៃ៖</span> <span id="receiptPrice" class="font-bold text-blue-600">$1.99</span></div>
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all">
+                បិទ (Close)
+            </button>
+        </div>
+    </div>
+
+    <!-- HISTORY MODAL -->
+    <div id="historyModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative space-y-4 max-h-[80vh] overflow-y-auto">
+            <button onclick="closeHistoryModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> ប្រវត្តិការបញ្ជាទិញរបស់អ្នក
+            </h3>
+            <div class="space-y-3" id="historyListContainer">
+                <!-- History items injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl relative space-y-4">
+            <button onclick="closeLoginModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-2">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800">ចូលគណនី SEREY</h3>
+                <p class="text-xs text-slate-500">សូមបញ្ចូលលេខទូរស័ព្ទ ឬអ៊ីនធឺណិតដើម្បីចូលប្រើប្រាស់</p>
+            </div>
+            <div class="space-y-3 pt-2">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">លេខទូរស័ព្ទ / Admin Username</label>
+                    <input type="text" id="loginUsername" placeholder="096 XXX XXXX ឬ admin" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500">
+                </div>
+                <button onclick="handleLogin()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all">
+                    ចូលគណនី
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN: ADD GAME MODAL -->
+    <div id="addGameModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative space-y-4">
+            <button onclick="closeAddGameModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-800">បន្ថែមហ្គេម ឬកាតថ្មី</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ឈ្មោះហ្គេម</label>
+                    <input type="text" id="newGameTitle" placeholder="ឧ: Honkai Star Rail" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ប្រភេទ (Category)</label>
+                    <select id="newGameCategory" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                        <option value="game">ហ្គេមអនឡាញ (Game)</option>
+                        <option value="card">កាតបង់ប្រាក់ (Card)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">តំណរូបភាព (Image URL)</label>
+                    <input type="text" id="newGameImage" placeholder="https://placehold.co/150x150..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div class="flex items-center gap-2 pt-2">
+                    <input type="checkbox" id="newGameHot" class="w-4 h-4 text-blue-600 rounded">
+                    <label for="newGameHot" class="text-xs font-semibold text-slate-700">ដាក់ជាហ្គេមលក់ដាច់បំផុត (Hot)</label>
+                </div>
+                <button onclick="addNewGameSubmit()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all mt-4">
+                    រក្សាទុកហ្គេមថ្មី
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Message Box -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 text-sm flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMessage">សារជូនដំណឹង</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Games & Cards Database with accurate official game logos & icons
+        let gamesData = [
+            {
+                id: 'mlbb',
+                title: 'Mobile Legends: Bang Bang',
+                category: 'game',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '51 Diamonds', price: 0.99 },
+                    { id: 2, name: '110 Diamonds', price: 1.99 },
+                    { id: 3, name: '277 Diamonds', price: 4.99 },
+                    { id: 4, name: '565 Diamonds', price: 9.99 },
+                    { id: 5, name: '1159 Diamonds', price: 19.99 },
+                    { id: 6, name: 'Twilight Pass', price: 9.49 }
+                ]
+            },
+            {
+                id: 'pubgm',
+                title: 'PUBG Mobile UC',
+                category: 'game',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '60 UC', price: 0.99 },
+                    { id: 2, name: '325 UC', price: 4.99 },
+                    { id: 3, name: '660 UC', price: 9.99 },
+                    { id: 4, name: '1800 UC', price: 24.99 },
+                    { id: 5, name: '3850 UC', price: 49.99 },
+                    { id: 6, name: '8100 UC', price: 99.99 }
+                ]
+            },
+            {
+                id: 'freefire',
+                title: 'Free Fire Diamonds',
+                category: 'game',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '50 Diamonds', price: 0.50 },
+                    { id: 2, name: '100 Diamonds', price: 1.00 },
+                    { id: 3, name: '310 Diamonds', price: 2.99 },
+                    { id: 4, name: '520 Diamonds', price: 4.99 },
+                    { id: 5, name: '1060 Diamonds', price: 9.99 },
+                    { id: 6, name: 'Weekly Membership', price: 1.99 }
+                ]
+            },
+            {
+                id: 'roblox',
+                title: 'Robux Login',
+                category: 'game',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1612287233202-b51b36616ef4?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '80 Robux', price: 4.99 },
+                    { id: 2, name: '500 Robux', price: 9.99 },
+                    { id: 3, name: '1000 Robux', price: 19.99 },
+                    { id: 4, name: '2000 Robux', price: 49.99 }
+                ]
+            },
+            {
+                id: 'genshin',
+                title: 'Genshin Impact Crystals',
+                category: 'game',
+                isHot: false,
+                image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '60 Crystals', price: 0.99 },
+                    { id: 2, name: '300 Crystals', price: 4.99 },
+                    { id: 3, name: '980 Crystals', price: 14.99 },
+                    { id: 4, name: '1980 Crystals', price: 29.99 },
+                    { id: 5, name: 'Welkin Moon', price: 4.99 }
+                ]
+            },
+            {
+                id: 'honorofkings',
+                title: 'Honor of Kings Tokens',
+                category: 'game',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '80 Tokens', price: 0.99 },
+                    { id: 2, name: '240 Tokens', price: 2.99 },
+                    { id: 3, name: '400 Tokens', price: 4.99 },
+                    { id: 4, name: '880 Tokens', price: 9.99 }
+                ]
+            },
+            {
+                id: 'valorant',
+                title: 'Valorant Points (VP)',
+                category: 'card',
+                isHot: true,
+                image: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '475 VP', price: 4.99 },
+                    { id: 2, name: '1000 VP', price: 9.99 },
+                    { id: 3, name: '2050 VP', price: 19.99 }
+                ]
+            },
+            {
+                id: 'steam',
+                title: 'Steam Wallet Card',
+                category: 'card',
+                isHot: false,
+                image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '$5 Steam Card', price: 5.50 },
+                    { id: 2, name: '$10 Steam Card', price: 10.80 },
+                    { id: 3, name: '$20 Steam Card', price: 21.00 }
+                ]
+            },
+            {
+                id: 'googleplay',
+                title: 'Google Play Gift Card',
+                category: 'card',
+                isHot: false,
+                image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: '$10 Gift Card', price: 10.50 },
+                    { id: 2, name: '$25 Gift Card', price: 25.50 }
+                ]
+            },
+            {
+                id: 'netflix',
+                title: 'Netflix Gift Card',
+                category: 'card',
+                isHot: false,
+                image: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=150&auto=format&fit=crop&q=80',
+                packages: [
+                    { id: 1, name: 'Standard 1 Month', price: 9.99 },
+                    { id: 2, name: 'Premium 1 Month', price: 13.99 }
+                ]
+            }
+        ];
+
+        let selectedGame = null;
+        let selectedPackage = null;
+        let purchaseHistory = [
+            { id: '#SR58291', game: 'Mobile Legends: Bang Bang', pkg: '110 Diamonds', price: 1.99, date: '06/03/2026 14:20' },
+            { id: '#SR94821', game: 'PUBG Mobile UC', pkg: '325 UC', price: 4.99, date: '06/03/2026 15:10' }
+        ];
+
+        // Render Games Grid
+        function renderGames(gamesToRender) {
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+
+            if (gamesToRender.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400">មិនមានទិន្នន័យហ្គេមដែលអ្នកស្វែងរកទេ</div>`;
+                return;
+            }
+
+            gamesToRender.forEach(game => {
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm hover:shadow-lg hover:border-blue-500/50 transition-all cursor-pointer group flex flex-col justify-between relative overflow-hidden`;
+                card.onclick = () => openPurchaseModal(game.id);
+
+                if (game.isHot) {
+                    const badge = document.createElement('div');
+                    badge.className = 'absolute top-3 right-3 bg-red-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm';
+                    badge.innerHTML = '<i class="fa-solid fa-fire mr-1"></i> HOT';
+                    card.appendChild(badge);
+                }
+
+                card.innerHTML += `
+                    <div class="flex flex-col items-center text-center space-y-3 pt-2">
+                        <img src="${game.image}" alt="${game.title}" class="w-20 h-20 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform border border-slate-100">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-1 group-hover:text-blue-600 transition-colors">${game.title}</h3>
+                            <span class="text-xs text-slate-400 capitalize">${game.category === 'game' ? 'ហ្គេមអនឡាញ' : 'កាតឌីជីថល'}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">បំពេញភ្លាមៗ</span>
+                        <span class="w-8 h-8 rounded-xl bg-blue-600 group-hover:bg-blue-700 text-white flex items-center justify-center text-xs transition-colors shadow-sm">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Categories
+        function filterCategory(category, btnElement) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.className = 'category-btn px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold text-sm shrink-0 border border-slate-200 transition-all';
+            });
+            btnElement.className = 'category-btn px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-sm shrink-0 shadow-md shadow-blue-500/20 transition-all';
+
+            if (category === 'all') {
+                renderGames(gamesData);
+            } else if (category === 'hot') {
+                renderGames(gamesData.filter(g => g.isHot));
+            } else {
+                renderGames(gamesData.filter(g => g.category === category));
+            }
+        }
+
+        // Search Filter
+        function filterGames() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = gamesData.filter(g => g.title.toLowerCase().includes(query));
+            renderGames(filtered);
+        }
+
+        // Open Purchase Modal
+        function openPurchaseModal(gameId) {
+            selectedGame = gamesData.find(g => g.id === gameId);
+            if (!selectedGame) return;
+
+            document.getElementById('modalGameIcon').src = selectedGame.image;
+            document.getElementById('modalGameTitle').textContent = selectedGame.title;
+            document.getElementById('modalGameCategoryDesc').textContent = selectedGame.category === 'game' ? 'បំពេញគ្រាប់ហ្គេមស្វ័យប្រវត្តិ' : 'ទិញកាតឌីជីថលស្វ័យប្រវត្តិ';
+            document.getElementById('userIdInput').value = '';
+            document.getElementById('zoneIdInput').value = '';
+            document.getElementById('checkNameResult').classList.add('hidden');
+
+            const pkgGrid = document.getElementById('modalPackagesGrid');
+            pkgGrid.innerHTML = '';
+            selectedGame.packages.forEach((pkg, index) => {
+                const pkgBtn = document.createElement('div');
+                pkgBtn.className = `p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between package-card ${index === 0 ? 'border-blue-500 bg-blue-50/40 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'}`;
+                pkgBtn.onclick = () => selectPackage(pkg, pkgBtn);
+                pkgBtn.innerHTML = `
+                    <span class="text-xs font-bold text-slate-800">${pkg.name}</span>
+                    <span class="text-sm font-black text-blue-600 mt-1">$${pkg.price.toFixed(2)}</span>
+                `;
+                pkgGrid.appendChild(pkgBtn);
+            });
+
+            selectedPackage = selectedGame.packages[0];
+            updatePriceDisplay();
+
+            document.getElementById('purchaseModal').classList.remove('hidden');
+            document.getElementById('purchaseModal').classList.add('flex');
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').classList.remove('flex');
+            document.getElementById('purchaseModal').classList.add('hidden');
+        }
+
+        // Check Game Username Simulation
+        function checkGameUsername() {
+            const userId = document.getElementById('userIdInput').value.trim();
+            if (!userId) {
+                showToast('សូមបញ្ចូល User ID ជាមុនសិន!', 'error');
+                return;
+            }
+
+            const sampleNames = ['SEREY GAMER', 'ANGKOR KING', 'PRO GAMER KH', 'DINO TOPUP FAN', '🇰🇭 LEGEND VIP'];
+            const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
+
+            document.getElementById('verifiedUsername').textContent = randomName + ` (${userId})`;
+            document.getElementById('checkNameResult').classList.remove('hidden');
+            showToast('ឆែកឈ្មោះគណនីបានជោគជ័យ!');
+        }
+
+        function selectPackage(pkg, element) {
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.className = 'p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between package-card border-slate-200 bg-white hover:border-slate-300';
+            });
+            element.className = 'p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between package-card border-blue-500 bg-blue-50/40 shadow-sm';
+            selectedPackage = pkg;
+            updatePriceDisplay();
+        }
+
+        function updatePriceDisplay() {
+            document.getElementById('selectedPriceDisplay').textContent = `$${selectedPackage.price.toFixed(2)}`;
+        }
+
+        // Checkout Process
+        function processCheckout() {
+            const userId = document.getElementById('userIdInput').value.trim();
+            if (!userId) {
+                showToast('សូមបញ្ចូលលេខសម្គាល់គណនី (User ID) របស់អ្នកជាមុនសិន!', 'error');
+                return;
+            }
+
+            closePurchaseModal();
+            document.getElementById('qrTotalText').textContent = `ទឹកប្រាក់ត្រូវបង់: $${selectedPackage.price.toFixed(2)}`;
+            document.getElementById('qrModal').classList.remove('hidden');
+            document.getElementById('qrModal').classList.add('flex');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.remove('flex');
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        // Simulate Successful Payment
+        function simulatePaymentSuccess() {
+            closeQrModal();
+
+            const invoiceId = '#SR' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('receiptId').textContent = invoiceId;
+            document.getElementById('receiptGame').textContent = selectedGame.title;
+            document.getElementById('receiptPackage').textContent = selectedPackage.name;
+            document.getElementById('receiptPrice').textContent = `$${selectedPackage.price.toFixed(2)}`;
+
+            purchaseHistory.unshift({
+                id: invoiceId,
+                game: selectedGame.title,
+                pkg: selectedPackage.name,
+                price: selectedPackage.price,
+                date: new Date().toLocaleDateString('km-KH', { hour: '2-digit', minute: '2-digit' })
+            });
+
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('successModal').classList.add('flex');
+            showToast('ទូទាត់ប្រាក់ជោគជ័យ!');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('flex');
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // History Modal
+        function openHistoryModal() {
+            const container = document.getElementById('historyListContainer');
+            container.innerHTML = '';
+
+            if (purchaseHistory.length === 0) {
+                container.innerHTML = `<div class="py-8 text-center text-slate-400 text-sm">មិនទាន់មានប្រវត្តិទិញនៅឡើយទេ</div>`;
+            } else {
+                purchaseHistory.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs';
+                    row.innerHTML = `
+                        <div class="space-y-1">
+                            <span class="font-bold text-slate-800 text-sm">${item.game}</span>
+                            <p class="text-slate-500">${item.pkg} - <span class="text-blue-600 font-semibold">$${item.price.toFixed(2)}</span></p>
+                            <span class="text-[10px] text-slate-400">${item.date} (${item.id})</span>
+                        </div>
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-700 font-bold rounded-full">ជោគជ័យ</span>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+
+            document.getElementById('historyModal').classList.remove('hidden');
+            document.getElementById('historyModal').classList.add('flex');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('flex');
+            document.getElementById('historyModal').classList.add('hidden');
+        }
+
+        // Login Modal
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('flex');
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function handleLogin() {
+            const user = document.getElementById('loginUsername').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+
+            if (user === 'admin' && pass === 'admin123') {
+                closeLoginModal();
+                showAdminDashboard();
+                showToast('ចូលទៅកាន់ Admin Dashboard ជោគជ័យ!');
+            } else {
+                showToast('ចូលគណនីអតិថិជនជោគជ័យ!');
+                closeLoginModal();
+            }
+        }
+
+        // Admin Navigation & Views
+        function showAdminDashboard() {
+            document.getElementById('mainSiteView').classList.add('hidden');
+            document.getElementById('searchBarContainer').classList.add('hidden');
+            document.getElementById('adminView').classList.remove('hidden');
+            renderAdminDashboard();
+        }
+
+        function showMainSite() {
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('searchBarContainer').classList.remove('hidden');
+            document.getElementById('mainSiteView').classList.remove('hidden');
+            renderGames(gamesData);
+        }
+
+        function renderAdminDashboard() {
+            document.getElementById('adminTotalOrders').textContent = purchaseHistory.length;
+            const totalRev = purchaseHistory.reduce((acc, curr) => acc + curr.price, 0);
+            document.getElementById('adminTotalRevenue').textContent = `$${totalRev.toFixed(2)}`;
+            document.getElementById('adminTotalGames').textContent = gamesData.length;
+
+            const tbody = document.getElementById('adminGamesTableBody');
+            tbody.innerHTML = '';
+
+            gamesData.forEach(game => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-4"><img src="${game.image}" class="w-10 h-10 rounded-xl object-cover border border-slate-200"></td>
+                    <td class="py-3 px-4 font-bold text-slate-800">${game.title}</td>
+                    <td class="py-3 px-4 capitalize text-slate-500">${game.category}</td>
+                    <td class="py-3 px-4">${game.isHot ? '<span class="px-2.5 py-1 bg-red-100 text-red-600 rounded-full text-xs font-bold">HOT</span>' : '<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">ធម្មតា</span>'}</td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="deleteGame('${game.id}')" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-semibold text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i> លុប
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openAddGameModal() {
+            document.getElementById('newGameTitle').value = '';
+            document.getElementById('newGameImage').value = '';
+            document.getElementById('newGameHot').checked = false;
+            document.getElementById('addGameModal').classList.remove('hidden');
+            document.getElementById('addGameModal').classList.add('flex');
+        }
+
+        function closeAddGameModal() {
+            document.getElementById('addGameModal').classList.remove('flex');
+            document.getElementById('addGameModal').classList.add('hidden');
+        }
+
+        function addNewGameSubmit() {
+            const title = document.getElementById('newGameTitle').value.trim();
+            const category = document.getElementById('newGameCategory').value;
+            let image = document.getElementById('newGameImage').value.trim();
+            const isHot = document.getElementById('newGameHot').checked;
+
+            if (!title) {
+                showToast('សូមបំពេញឈ្មោះហ្គេម!', 'error');
+                return;
+            }
+
+            if (!image) {
+                image = 'https://placehold.co/150x150/1e3a8a/ffffff?text=' + encodeURIComponent(title);
+            }
+
+            const newId = 'game_' + Date.now();
+            gamesData.push({
+                id: newId,
+                title: title,
+                category: category,
+                isHot: isHot,
+                image: image,
+                packages: [
+                    { id: 1, name: 'កញ្ចប់តូច (Small)', price: 0.99 },
+                    { id: 2, name: 'កញ្ចប់មធ្យម (Medium)', price: 4.99 },
+                    { id: 3, name: 'កញ្ចប់ធំ (Large)', price: 9.99 }
+                ]
+            });
+
+            closeAddGameModal();
+            renderAdminDashboard();
+            showToast('បានបន្ថែមហ្គេមថ្មីដោយជោគជ័យ!');
+        }
+
+        function deleteGame(id) {
+            gamesData = gamesData.filter(g => g.id !== id);
+            renderAdminDashboard();
+            showToast('បានលុបហ្គេមជោគជ័យ!');
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+         }, 3000);
+        }
+
+        // Initialize App on load
+        window.onload = function() {
+            renderGames(gamesData);
+        };
+    </script>
+</body>
+</html>
